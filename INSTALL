@@ -1,0 +1,7 @@
+
+
+	type 'make'.
+	This will create the rinecrypt executable, along with its shared
+	library, located in the 'lib/' directory
+	if you want to use rinecrypt, in this directory, create a link
+	named librinecrypt.so.0 to the actual shared library
