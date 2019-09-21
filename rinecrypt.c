@@ -1,7 +1,7 @@
 /*
  *  rinecrypt.c AES file encryptor/decryptor
  *
- *  Copyright (C) 2002, 2003 Gary Rancier <mephis5@softhome.net>
+ *  Copyright (C) 2020 Gary Rancier <lodyssee@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -21,6 +21,7 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <time.h>
 #include <string.h>
 #include <sys/types.h>
@@ -214,7 +215,8 @@ int main(int argc, char *argv[])
 
 		//permission to overwrite
 		fprintf (stderr, "The output file: %s exists\nOverwrite? [n]: ", f_ctx.ofn);
-		fgets(usr_ent_str, 4, stdin);
+		if (fgets(usr_ent_str, 4, stdin) == NULL)
+			 return -1;
 
 		//if yes overwrite existing outfile
 		if ((usr_ent_str[0] = toupper(usr_ent_str[0])) == 'Y')

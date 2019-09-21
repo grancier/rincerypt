@@ -1,7 +1,7 @@
 /*
 *  rinecrypt.h AES encryptor/decryptor defines.
 *
-*  Copyright (C) 2002, 2003 Gary Rancier <mephis5@softhome.net>
+*  Copyright (C) 2020 Gary Rancier <lodyssee@gmail.com>
 *
 *  This program is free software; you can redistribute it and/or
 *  modify it under the terms of the GNU General Public License
@@ -47,7 +47,7 @@ void get_user_string(const char *prn_msg, unsigned char *user_string);
 void enc_n_auth_file(file_ctx f_ctx);
 
 //get authentication measures for ciphertxt and decrypt ciphertxt
-void dec_n_auth_file(file_ctx f_ctx);
+int dec_n_auth_file(file_ctx f_ctx);
 
 //check if user entered string was twice correctly inputted
 int cmp_crypt_usr_string(unsigned char *usr_ent_str, unsigned char *usr_ent_str_cmp, const char *prn_msg);

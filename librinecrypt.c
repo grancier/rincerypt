@@ -1,7 +1,7 @@
 /*
 *  librinecrypt.c password handling routines.
 *
-*  Copyright (C) 2002, 2003 Gary Rancier <mephis5@softhome.net>
+*  Copyright (C) 2020 Gary Rancier <lodyssee@gmail.com>
 *
 *  This program is free software; you can redistribute it and/or
 *  modify it under the terms of the GNU General Public License

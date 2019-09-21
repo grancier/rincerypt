@@ -1,7 +1,7 @@
 /*
 *  dencrypt.c rinecrypt encrypt/decrypt engine
 *
-*  Copyright (C) 2002, 2003 Gary Rancier <mephis5@softhome.net>
+*  Copyright (C) 2020 Gary Rancier <lodyssee@gmail.com>
 *
 *  This program is free software; you can redistribute it and/or
 *  modify it under the terms of the GNU General Public License
@@ -419,7 +419,7 @@ void enc_n_auth_file(file_ctx f_ctx)
 		ptr += 2;
 	}
 	
-	sprintf((char *)timestr, (const char *)asctime(localtime(&timenow)));	
+	sprintf((char *)timestr, "%s", (const char *)asctime(localtime(&timenow)));	
 	
 	prn_out[FID_LEN + 18] = ' ';
 	for (f = 0;f< 24; f++)
@@ -478,7 +478,7 @@ void enc_n_auth_file(file_ctx f_ctx)
 }
 
 
-void dec_n_auth_file(file_ctx f_ctx)
+int dec_n_auth_file(file_ctx f_ctx)
 {
 	aes_context *a_dec_ctx = (aes_context *)xmalloc_secure(sizeof(aes_context));
 	byte *hmac_bytes  = (byte *)xmalloc_secure(128 + 1);
@@ -505,7 +505,8 @@ void dec_n_auth_file(file_ctx f_ctx)
 
 	//get the ciphertext header
 	rewind(f_ctx.fin);
-	fread(hdr_buf, sizeof(byte), HEADER_SIZE, f_ctx.fin);
+	if (fread(hdr_buf, sizeof(byte), HEADER_SIZE, f_ctx.fin) != HEADER_SIZE)
+		return -1;
 
 	//cast version bytes from ciphertext from byte to  short
 	for (i = EXT_LEN, j = 0; i < VER_LEN + EXT_LEN; ++i, ++j)
@@ -536,7 +537,7 @@ void dec_n_auth_file(file_ctx f_ctx)
 	for (i = (VER_LEN + EXT_LEN + FID_LEN), j = 0; i < HEADER_SIZE; ++i, ++j)
       			 timethen |= (time_t)(hdr_buf[i]) << (j * 8);
 	
-	sprintf((char *)timestr, (const char *)asctime(localtime(&timethen)));	
+	sprintf((char *)timestr, "%s", (const char *)asctime(localtime(&timethen)));	
 
 	//printf(" %s  %i\n", timestr, strlen(timestr));
 	prn_out[FID_LEN + 18] = ' ';
@@ -662,4 +663,6 @@ void dec_n_auth_file(file_ctx f_ctx)
 	xfree(salt);
 	xfree(mac_key);
 	xfree(prn_out);
+
+	return 0;
 }
