@@ -664,5 +664,5 @@ int dec_n_auth_file(file_ctx f_ctx)
 	xfree(mac_key);
 	xfree(prn_out);
 
-	return 0;
+	return OK;
 }
